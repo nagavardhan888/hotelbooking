@@ -9,7 +9,7 @@ connect()
 .then(()=>{
         console.log("connected to the db")
     })
-    .catch((err)=>{
+    .catch((err)=>{  
         console.dir(err)
     })
 const initDB = async()=>{
