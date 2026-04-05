@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const Listing = require('./models/listing');
 const path = require('path');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 
 // Middlewares
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
+app.engine('ejs', ejsMate);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
@@ -26,7 +28,9 @@ connect()
     .catch((err) => {
         console.dir(err);
     });
-
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 // Index Route
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
@@ -47,7 +51,7 @@ app.get("/listings/:id", async (req, res) => {
         console.log("Still null for ID:", id);
         return res.send("Listing not found in database.");
     }
-    res.render("listings/show.ejs", { listing });
+    res.render("listings/show", { listing });
 });
 
 // Create Route
