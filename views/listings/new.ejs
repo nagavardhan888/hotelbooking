@@ -1,39 +1,68 @@
 <% layout('layouts/boilerplate') -%>
 <div class="row mt-3">
-<div class="col-8 offset-2">
-      <!-- <br><br> -->
-    <H1>create new listing</H1>
-    <form method="POST" action="/listings" novalidate class="needs-validation">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-        <input type="text" placeholder="Enter listing title" name="listing[title]" id="title"  class="form-control"required></div>
-        <div class="mb-3">
-             <label for="description" class="form-label">description</label>
-        <textarea name="listing[description]" id="description" cols="20" rows="5" required placeholder="Enter listing description" class="form-control"></textarea>
-        </div>
-        <div class="mb-3">
-             <label for="image" class="form-label">IMAGE URL </label>
-         <input type="text" placeholder="Enter the image url" name="listing[image]" id="image" class="form-control" required>
-        </div>
-        <div class="row">
-          <div class="mb-3 col-md-4">
-        <label for="Price" class="form-lable">Price</label>
-         <input type="number" placeholder="Enter listing price" name="listing[price]" id="price" class="form-control" required>
+    <div class="col-8 offset-2">
+        <h1>Create New Listing</h1>
+        <form method="POST" action="/listings" novalidate class="needs-validation">
+            
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" placeholder="Enter listing title" name="listing[title]" id="title" class="form-control" required>
+                <div class="invalid-feedback">Please enter a title.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" id="description" rows="5" required placeholder="Enter listing description" class="form-control"></textarea>
+                <div class="invalid-feedback">Please enter a short description.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Image URL</label>
+                <input type="text" placeholder="Enter the image url" name="listing[image]" id="image" class="form-control" required>
+                <div class="invalid-feedback">Please provide a valid image link.</div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" placeholder="1200" name="listing[price]" id="price" class="form-control" required>
+                    <div class="invalid-feedback">Price should be a valid number.</div>
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" placeholder="London, UK" name="listing[location]" id="location" class="form-control" required>
+                    <div class="invalid-feedback">Location is required.</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" placeholder="United Kingdom" name="listing[country]" id="country" class="form-control" required>
+                <div class="invalid-feedback">Country name is required.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary color-button mb-3">Create Listing</button> 
+        </form>
     </div>
- <div class="mb-3 col-md-8">
-        <label for="Location" class="form-lable">Location</label>
-        <input type="text" placeholder="Enter listing location" name="listing[location]" id="location" class="form-control" required>
-        </div>
-        </div>
-       
-      
-        <div class="mb-3">
-            <label for="Country" class="form-lable">Country</label>
-        <input type="text" placeholder="Enter listing country" name="listing[country]" id="country" class="form-control" required>
-        </div>
-          <br>
-        <button type="submit" class="btn btn-primary color-button mb-3">create listing</button> 
-        
-    </form>
 </div>
-</div>
+
+<script>
+(() => {
+  'use strict'
+
+  // Fetch all forms we want to apply validation to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>

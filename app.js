@@ -56,9 +56,18 @@ app.get("/listings/:id", async (req, res) => {
 
 // Create Route
 app.post("/listings", async (req, res) => {
-    const newListing = new Listing(req.body.listing);
+    try{
+         const newListing = new Listing(req.body.listing);
+   if(typeof req.body.listing.image === "string") {
+            newListing.image = { url: req.body.listing.image };
+        }
+  
     await newListing.save();
     res.redirect("/listings");
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    res.status(500).send("An error occurred while creating the listing.");
+  }
 });
 
 // Edit Route

@@ -3,28 +3,34 @@
 <div class="col-8 offset-2">
     
     <h1>edit your listing</h1>
-    <form method="POST" action="/listings/<%=listing._id%>?_method=PUT">
+    <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" novalidate class="needs-validation">
         <div class="mb-3">
            <label for="title" class="form-lable">Title</label>
         <input type="text" placeholder="Enter listing title"  class="form-control" name="listing[title]" id="title" value="<%=listing.title%>" required>
+        <div class="invalid-feedback">Please enter a title.</div>
        </div>
        <div class="mb-3">
            <label for="description" class="form-lable">description</label>
         <textarea name="listing[description]" id="description"  class="form-control" cols="30" rows="5" required placeholder="Enter listing description "><%=listing.description%></textarea>
+        <div class="invalid-feedback">Please enter a description.</div>
        </div>
 
        <div class="mb-3">
            <label for="image" class="form-lable">IMAGE URL</label>
         <input type="text" placeholder="Enter the image"  class="form-control" name="listing[image]" id="image" value="<%=listing.image%>" required>
+        <div class="invalid-feedback">Please provide a valid image link.</div>
+
        </div>
        <div class="row">
             <div class="mb-3 col-md-4">
           <label for="price" class="form-lable">Price</label>
         <input type="number" placeholder="Enter listing price" name="listing[price]" id="price" class="form-control" value="<%=listing.price%>"   required>
+         <div class="invalid-feedback">Price should be a valid number.</div>
         </div>
         <div class="mb-3 col-md-8">
            <label for="location" class="form-lable">Location</label>
         <input type="text" class="form-control" placeholder="Enter listing location" name="listing[location]" id="location" value="<%=listing.location%>"   required>
+         <div class="invalid-feedback">Location is required.</div>
         </div>
        </div>
       
@@ -32,6 +38,7 @@
         <div class="mb-3">
            <label for="Country" class="form-lable">Country</label>
         <input type="text" placeholder="Enter listing country" name="listing[country]" id="country"  class="form-control" value="<%=listing.country%>" required>
+         <div class="invalid-feedback">Country name is required.</div>
         </div>
         <button type="submit" class="btn btn-primary color-button mb-3">Update Info</button>
 
@@ -39,3 +46,23 @@
     
 </div>
 </div>
+<script>
+(() => {
+  'use strict'
+
+  // Fetch all forms we want to apply validation to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
